@@ -518,7 +518,7 @@ $ cat data.txt | base64 -d #pročitaj enkodirani sadržaj fajla data.txt
 
 ## Level 11 -> Level 12
 
-pw `JVNBBFSmZwKKOP0XbFXOoW8chDz5yVRv`
+
 
 - Šifra se nalazi u `data.txt`, gdje su sva velika slova [A-Z] i mala slova [a-z] **rotirana** za 13 pozicija
 
@@ -571,7 +571,124 @@ alias rot13= "tr 'A-Za-z' 'N-ZA-Mn-za-m'"
 
 ![level-11](.//bandit-level-screenshots/lvl11-12pw.png)
 
+pw `JVNBBFSmZwKKOP0XbFXOoW8chDz5yVRv`
+
+## Level 12 -> Level 13
+
+The `password` for the next level is stored in the file `data.txt`, which is a **hexdump** of a file that has been repeatedly compressed. 
+For this level it may be useful to create a directory under /tmp in which you can work using mkdir. For example:` mkdir /tmp/myname123`
+Then copy the datafile using cp, and rename it using mv (read the manpages!)
+
+**Hexdumps** koristimo za pregled `data` koji se ne mogu predstaviti pomoću `stringa` te ih je lakše pročitati kao `hex` vrijednosti.
+`hexdump` **ima 3 glavne kolone**:
+1. prikazuje adresu
+2. je *hex* prikaz podataka na toj adresi
+3. stvarni podatak kao string, gdje je  `.`  predstavljena hex vrijednost koja se ne može prikazati kao string
+
+**Šta radimo u ovom slučaju?**
+1. kreiramo novi direktorij i prekopiramo fajl sa podacima, kako ih ne bismo izmjenili trajno u slučaju greške
+2. prebacimo podatke u neki hexdump_data fajl koji sadrži uvijek hexdump prikaz fajlova radi lakšeg čitanja
+3. uradimo `revert` proces od hexdump pomoću `xxd -d` komande i smjestimo te podatke u compressed_data
+4. `xxd compressed_data` pogledamo hex prikaz `compressed_data` da vidimo prvi red i otkrijemo koja je kompresija u pitanju 
+5. rješavamo dekompresiju u zavisnosti da li je `gzip` `bzip2` `tar`
+6. ponavljamo korake `4. -5.` dok ne dobijemo podatke
 
 
+```bash
+$ cd /tmp #navigate to /tmp
+$ mkdir sasa-cmpressed #creade new directory npr. sasa-cmpressed
+$ cd sasa-cmpressed #navigate to sasa-cmpressed
+$ cp /home/bandit12/data.txt .  #copy data.txt from home dir to this dir
+```
+Hexdumped `data.txt` premjestimo u `hexdumped_data`
 
+```bash
+$ mv data.txt hexdump_data
+bandit12@bandit:/tmp/sasa-cmpressed$ head -10 hexdump_data 
+```
+### Revert hexdump of the file
 
+```bash
+bandit12@bandit:/tmp/sasa-cmpressed$ xxd -r hexdump_data compressed_data
+```
+![level-12-compressed-data](.//bandit-level-screenshots/lvl12-compressed_data.png)
+*NOTE: Stvarni podaci nisu 'readable', hexdump je čitljiviji*
+
+### Decompress the data
+
+Posmatramo prve bajtove u hexdump da pronađemo [file signature](https://en.wikipedia.org/wiki/List_of_file_signatures) i na osnovu liste prepoznamo koji metod dekompresije koristimo
+
+**GZIP**
+ 
+ Koraci:
+ 1. preimenujemo fajl OBAVEZNO kod GZIP  dodavanjem ekstenzije `.gz`
+ `$mv compressed_data compressed_data.gz`
+ 2. `$ gzip -d ` dekompresija fajla
+
+ `gzip` fajlovi počinju sa **\x1f\x8B\x08** 
+ Jedan od takvih je prvi red hexdumped_data fajla
+  `00000000: 1f8b 0808 8c3f f563 0203 6461 7461 322e  .....?.c..data2.`
+
+  `gzip -d` ispravimo ekstenziju fajla, preimenovanjem fajla i dekompresijom 
+
+  ```bash
+  $ mv compressed_data compressed_data.gz #preimenujemo fajl dodavanjem ekstenzije .gz
+  $ gzip -d compressed_data.gz #dekompresija fajla
+  ```
+
+**BZIP2**
+
+1. Preimenujemo fajl sa ekstenzijom `.bz2` ako je `version2`
+
+Podaci nisu u potpunosti dekompresovani jer imamo više različitih tipova kompresije
+
+![level-12-xxd-command](.//bandit-level-screenshots/lvl12-xxd-command.png)
+
+Na slici gledamo prve bajtove:
+`425a` je **file signature** za `bzip`
+`68 (h)` predstavlja verziju 2 -> `bzip2 -d` za dekompresiju
+
+```bash
+$ mv compressed_data compressed_data.bz2 #preimenujemo file compressed_data u file sa ekstenzijom .bz2
+$ bzip2 -d compressed_data.bz2 #dekompresija
+```
+
+Ako pogledamo `compressed_data` vidimo da opet imamo slučaj sa `gzip`
+```bash
+$ mv compressed_data compressed_data.gz
+$ gzip -d compressed_data.gz
+```
+
+Provjerimo stanje `compressed_data` pomoću `$ xxd compressed_data | head`
+
+**Tar archives**
+
+**Archive file** je fajl koji sadrži jedan ili više fajlova i njihove metadata
+```bash
+$ tar -cf #za kreiranje archive fajlova
+$ tar -xf #za extracting achive fajlova
+```
+`.tar` ekstenzija
+
+Prikazaće nam se u posljednjoj koloni `data5.bin......`
+što bi značilo da imamo neki archive, pa koristimo `tar` za extract fajla
+
+```bash
+$ mv compressed_data compressed_data.tar
+$ tar -xf compressed_data.tar #dobijamo data5.bin u listi -ls
+
+$ tar -xf data5.bin #u -ls imamo data5.bin data6.bin
+$ xxd data6.bin #vidimo da je bzip compressed na osnovu 425a, verzija 2 na osnovu 68
+
+$ bzip2 -d data6.bin #dobijamo poruku: bzip2: Can't guess original name for data6.bin -- using data6.bin.out
+$ xxd data6.bin.out | head #vidimo u zadnjoj koloni data8.bin pa koristimo tar ponovo
+
+$ xxd data8.bin | head #provjerimo i vidimo da se radi o gzip 
+$ mv data8.bin data8.gz #kod GZIP MORAMO promjeniti ekstenziju fajla, kod ostalih ne mora
+$ gzip -d data8.gz
+$ cat data8 #dobijamo sifru
+```
+
+![level-12](.//bandit-level-screenshots/lvl12-13pw.png)
+
+pw `wbWdlBxEir4CaE8LaPhauuOo6pwRmrDw`
