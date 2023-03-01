@@ -1,6 +1,6 @@
 # SADRŽAJ 
 
-[📖 1 Bilješke i komande sa predavanja week-2](#1-Komande-sa-predavanja) </br>
+[📖 1 Bilješke i komande sa predavanja week-2](#1-Komande-sa-predavanja)  
 [📖 2 Komande korištene pri izradi TASK - 2](#2-Komande-za-task-2)
 
 
@@ -16,7 +16,7 @@ $ hostnamectl #Displays your hostname
 `$ man ssh ` -  manual za alat SSH 
 `$ man` - komanda za prikaz manuala za komande 
 
-**SSH** is a UNIX-based command suite and protocol for securely accessing a remote computer. SSH secures network client/server communications by authenticating both endpoints with a digital certificate and by encrypting passwords. SSH uses RSA public key cryptography to manage connections and authentication.
+**SSH**  is a UNIX-based command suite and protocol for securely accessing a remote computer. SSH secures network client/server communications by authenticating both endpoints with a digital certificate and by encrypting passwords. SSH uses RSA public key cryptography to manage connections and authentication.
  
 `$ ssh -i "devops-mentorship-program-week-2.pem" centos@3.3.3.3` </br>
  **defaultni port** za SSH je `port 22` </br>
@@ -220,6 +220,12 @@ grep -wirL "traženi-string" #vraća filename koji sadrži traženu riječ
 grep -wirC "traženi-string" # -C broji koliko pogodaka imamo sa traženim pojmom u svakom fajlu 
 ```
 
+### `grep` vs `find`
+
+- `grep` pronalazi **linije** iz text fajla koji odgovaraju traženom pojmu tj. *pattern-u*
+- `find` pronalazi **fajlove i direktorijume** čija **imena** odgovaraju traženom pojmu tj. *pattern-u*
+
+
 ### Pitanje: Gdje se nalazi log file servisa x i kako ga pretažiti?
 
 1. `cd /etc/` - odemo u etc direktorij 
@@ -339,7 +345,7 @@ $ cat readme #pročitamo sadržaj fajla
 
 `-` je specijalni karakter, te se **ne preporučuje započinjanje imena ovim karakterom** </br>
 ```bash 
-$ cat ./- #dodajemo putanju /
+$ cat ./- #dodajemo putanju / tj. escape znak
 ```
 ![level-1](.//bandit-level-screenshots/lvl1-2pw.png)
 
@@ -349,6 +355,11 @@ Komandom `ls` provjerimo da li traženi fajl postoji u listi
 ```bash 
 $ cat "spaces in this filename" #koristimo navodnike kako bismo  izbjegli white spaces 
 ```
+ili 
+```bash
+$ cat spaces\ in\ this\ filename #možemo koristiti backslash \ da izbjegnemo white spaces
+```
+
 ![level-2](.//bandit-level-screenshots/lvl2-3pw.png)
 
 ## Level 3 -> Level 4
@@ -372,9 +383,15 @@ $ cat .hidden #prikažemo sadržaj hidden fajla
 $ ls
 $ cd inhere 
 $ ls 
-$ file ./* #za prikaz tipa podataka svakog fajla u direkriju inhere 
+$ file ./* #za prikaz tipa podataka svakog fajla u direkriju inhere ; . - oznaka za fajl, /* - sve ekstenzije fajlova
 $ cat ./-file07 #iz liste smo vidjeli da jedino file07 ima tip podataka ASCII text te se pozicioniramo na njega
 ```
+Ukoliko pokušamo iskoristiti komandu `strings` dobićemo sljedeći output
+```bash
+bandit4@bandit:~$ strings inhere
+strings: Warning: 'inhere' is a directory
+```
+`strings` - print the sequences of printable characters in **files**
 
 ![level-4](.//bandit-level-screenshots/lvl4-5pw.png)
 
@@ -394,12 +411,18 @@ $ find . -type f -readable -size 1033c ! -executable
 Parametri: </br>
 `-type` za određivanje tipa `f` se odnosi na **file** </br>
 `-readable` human-redable file </br>
-`-size` veličina fajla </br>
-`! -executable` file je non executable </br>
+`-size 1033c` veličina fajla, c se ondosi na **bytes**</br>
+`! -executable` file je **not executable** ili direktorij je **not searchable** </br>
 
 ```bash
 $ cd maybehere07
 $ cat .file2 #prikaz sadržaja fajla 
+```
+
+ili kraće
+```bash
+$ find . -type f -readable -size 1033c ! -executable 
+$ cat ./inhere/maybehere07/.file2
 ```
 ![level-5](.//bandit-level-screenshots/lvl5-6pw.png)
 
@@ -410,22 +433,41 @@ $ cat .file2 #prikaz sadržaja fajla
 * owned by group bandit6
 * 33 bytes in size
 
+*NOTE*
+ Nakon što se ulogujemo na `lvl bandit6` nalazimo se u `home/bandit6` tj. u **home direktorijumu**. Za razliku od prethodnih levela gdje je rečeno da se nešto nalazi u home direktoriju, ovdje **ne znamo gdje se file nalazi** te je potrebno pretražiti cijeli sistem. 
+
+Tražimo iz `root /` direktorijuma, što možemo uraditi na više načina:
+* Run `find /` umjesto `find ./`
+* Run `cd /` da se prebacimo iz `home` u `root`, a onda `find ./`
+
+**1. Način**
 ```bash
 $ find / -user bandit7 -group bandit6 -size 33c 2>&1 | grep  -F -v Permission | grep -F -v directory
 ```
-
 Koristimo `find` komandu sa propertijima: </br>
 `-user ` za filtriranje koristnika bandit7 </br>
 `-group` za filtriranje grupe bandit6 </br>
 `-size`  za filtriranje veličine 33 byte </br>
-`2>&1`   za skrivanje svih mogućih **error** poruka </br>
+`2>&1 ili 2> /dev/null`   za skrivanje svih mogućih **error** poruka </br>
 `2>` redirects stderr to an (unspecified) file </br>
 `&1` redirects stderr to stdout. </br>
+`dev/null` special file which discards any input
 
 Koristeći `|` **pipe line** rezultat lijeve komande prepuštamo dalje `grep` komandi koja ima propertije:</br>
 `-F` tražimo pojam u fajlu </br>
 `-v` **--invert-match** tražimo suprotno od Permission tj. directory </br>
 
+**2. Način**
+```bash
+$ find / -user bandit7 -group bandit6 -size 33c #dobićemo output sa mnogo Permission denied koje je potrebno filtrirati
+
+
+$ find / -user bandit7 -group bandit6 -size 33c 2> /dev/null #remove "Permission denid" messages
+```
+**I na kraju odradimo sljedeću komandu**
+```bash
+$ cat /var/lib/dpkg/info/bandit7.password #ispišemo sadržaj fajla
+```
 ![level-6](.//bandit-level-screenshots/lvl6-7pw.png)
 
 ## Level 7 -> Level 8
@@ -445,7 +487,7 @@ Flag `-u` filtrira jedinstvene **unique** linije, tj. linije koje se pojavljuju 
 
 **Komanda `uniq` koristi se u kombinaciji sa komandom `sort`. Zašto?** </br>
  [`uniq`](https://www.geeksforgeeks.org/uniq-command-in-linux-with-examples/)prihvata kao ulaz podatke iz nekog `.txt` fajla i otklanja sve ponovljene linije **samo ako su susjedne**. </br>
-  Zbog toga koristimo dodatno komandu `sort` da sortiramo tj. uklonimo ne-susjedne linije. </br>
+  Zbog toga koristimo prvo komandu `sort` da sortiramo fajl. </br>
 
   ```bash
   $ sort data.txt | uniq -u #za ispis jedinstvene linije unutar fajla data.txt
@@ -473,3 +515,63 @@ $ cat data.txt | base64 -d #pročitaj enkodirani sadržaj fajla data.txt
 
 **Šifra za nastavak lvl 11 -> lvl 12**
 `6zPeziLdR2RKNdNYFNb6nVCKzphlXHBM`
+
+## Level 11 -> Level 12
+
+pw `JVNBBFSmZwKKOP0XbFXOoW8chDz5yVRv`
+
+- Šifra se nalazi u `data.txt`, gdje su sva velika slova [A-Z] i mala slova [a-z] **rotirana** za 13 pozicija
+
+*NOTE*  
+
+**ROT13** ili **"rotate by 13 places"** je način kodiranja, kojim se svako slovo (engleskog) alfabeta mijenja slovom 13 mjesta dalje. 
+* Nema enkripcijskog ključa i simetričan je: kako engleski alfabet ima 26 slova, * dvije primjene ROT 13 daju ponovo polazni tekst.
+* Nema kriptografsku snagu i nije pogodan za šifriranje jer se lako razbija frekvencijskom analizom teksta. 
+
+![ROT-13-diagram](.//bandit-level-screenshots/ROT13.png)
+
+[Ovdje možete probati ROT13 šifriranje](https://rot13.com/)
+
+Komanda `tr` *(eng. translate)* omogućava zamjenu karaktera drugim karakterima
+`$ tr <old_chars> <new_chars>` 
+
+**1. Način**
+
+```bash
+$ cat data.txt | tr 'A-Za-z' 'N-ZA-Mn-za-m'
+```
+```bash
+'a' se mapira u 'n'
+'z' se mapira u 'm'
+```
+
+dakle, mapiramo `[a-m] = [n-z]` što pokriva samo slova u opsegu `[a-m]`
+
+preostali opseg za mapiranje `[n-z] = [a-m]` pa bi naša komanda sada izgledala ovako
+```bash
+$ tr [a-m][n-z] [n-z][a-m] #komanda djelimicno tacna
+```
+
+`[a-m][n-z]` možemo skratiti i napisati kao `[a-z]`
+```bash
+$ tr [a-z] [n-z][a-m] #kraći zapis sa problemom
+
+#[] uključene kao karakteri npr. n->[ 
+```
+Da riješimo problem, spojimo `[n-z][a-m] = [n-za-m]`
+
+**Isti je postupak i sa velikim slovima**
+
+**2.Način**
+
+Dodamo **ROT13**  kao `alias` da skratimo kucanje
+```bash
+alias rot13= "tr 'A-Za-z' 'N-ZA-Mn-za-m'"
+```
+
+![level-11](.//bandit-level-screenshots/lvl11-12pw.png)
+
+
+
+
+
