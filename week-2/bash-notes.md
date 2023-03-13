@@ -312,6 +312,13 @@ lsblk #ispis diska, particije na disku i veličina particije
 df -h #zauzeće po particijama 
 ```
 
+```bash
+$ ps aux #vraća listu pokrenutih procesa 
+```
+* `ps` skraćeno od "process status" i vraća listu pokrenutih procesa na sistemu
+* `a` - opcija kaže `ps` da prikaže informacije o svim procesima na sistemu, ne samo onih na terminalu
+* `u` This option tells ps to display detailed information about each process, including the username of the process owner, the process ID (PID), the CPU and memory usage, and the start time of the process.
+
 <a name="2-Komande-za-task-2">
 
 # 2 Komande korištene pri izradi TASK - 2
