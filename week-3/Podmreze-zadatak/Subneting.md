@@ -2,12 +2,15 @@ Kolege evo jedan primjer na kojem možete provježbati **kreiranje podmreža**
 
 **Tekst zadatka glasi:**
 *Kreirati podmreže za mrežu `10.1.16.0/20`, date su LAN mreže i potreban broj hostova*
+
 **LAN1 -200, LAN2 -30, LAN3-122, LAN4 -600, LAN5 -300**
+
 *I na kraju, koji je broj IP adresa koje su dostupne za dodjelu drugim podmrežama?*
 
 **Koraci pri rješavanju:**
 1. Sve LAN-ove koji su podmreže poredate u **opadajućem redoslijedu** od najvećeg ka najmanjem, jer prvo dodjelite podmrežu onom LAN-u koji zahtjeva najviše host-ova. 
 2. Zatim računamo koliko stvarno adresa moramo imati:
+
 **LAN4 - 600 host +2 (adr.mreže i broadcast) = 602 adrese -> 2na10** je najbliži veći broj tj. **1024**
     * Iz **2na10** znamo masku za ovu podmrežu -> **32 - 10 =22 dakle maska za LAN4 je /22**
 *Postupak ponovimo za sve LAN podmreže*
@@ -20,13 +23,19 @@ Kolege evo jedan primjer na kojem možete provježbati **kreiranje podmreža**
 5. Odredimo broadcast adresu
 
 Ove "formule" ne postoje ali evo otprilike:
+
 `32bitna IP adresa - maska (broj jedinica) = broj nula u maski` 
+
 `broj nula u maski -> izračunamo 2na broj nula = broj dostupnih host adresa`
 
-U ovom primjeru je adresa mreže (prva adresa) upravo `10.1.16.0` ali da bismo bili sigurni adresa mreže i broadcast se računaju na sljedeći način:
+U ovom primjeru je adresa mreže (prva adresa) upravo `10.1.16.0` 
+ali da bismo bili sigurni adresa mreže i broadcast se računaju na sljedeći način:
+
 
 `IP adresa` AND `maska` = `adresa mreže`
+
 `IP adresa` OR `inverzna maska` (sve 1 -> 0, sve 0 ->1) = `broadcast adresa`
+
 
 ```bash
 AND
@@ -37,6 +46,7 @@ AND
 tj. samo dvije 1 daju 1, ostalo 0.
 ```
 **Olakšica za određivanje adrese mreže:**
+
 Za adresu mreže - sve gdje su 1 u **maski**  te brojeve prepiši iz ip adrese dole, ostalo računaš po pravilima iz AND tabele
 
 ```bash
@@ -48,23 +58,34 @@ OR
 samo 00 je 0, ostalo 1
 ```
 **Olakšica za određivanje broadcast adrese**
+
 Sve dokle su 0 u **inverznoj maski** prepiši, ostalo je 1
 
 
 # LAN 4
 
 Za LAN 4 prvo određujemo podmrežu jer zahtjeva najviše hostova.
+
 Ponovimo još jednom:
-600 hostova + 2 (adresa mreže + broadcast)= 602 adrese -> 2na10 daje 1024 hosta -> maska je 32 -10 = 22 -> maska za LAN 4 je **/22**
+
+600 hostova + 2 (adresa mreže + broadcast)= 602 adrese -> 2na10 daje 1024 hosta 
+-> maska je 32 -10 = 22 -> maska za LAN 4 je **/22**
+
 
 **Zašto baš 2na10?**
+
 Pa kako imamo 602 adrese koje moramo da smjestimo u podmrežu uzima se uvijek više adresa.
+
 Da smo uzeli 2na9 =512 znači da bismo mogli adresirati samo 512 adresa od 602 što ne možemo uraditi pa se uzima za jedan veće tj. 2na10
 
-Pošto je ovo prva podmreža, adresa mreže će biti naša adresa mreže iz `10.1.16.0/20` tj.
+
+**Pošto je ovo prva podmreža, adresa mreže će biti naša adresa mreže iz `10.1.16.0/20` tj.**
+
 
 `10.1.16.0` adresa mreže LAN 4
-sada tražimo broadcast adresu
+
+**sada tražimo broadcast adresu**
+
 1. napišemo adresu mreže u binarnom obliku 
 2. napišemo inverznu masku 
 3. OR operacija 
