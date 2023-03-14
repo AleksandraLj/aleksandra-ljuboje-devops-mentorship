@@ -1,1 +1,35 @@
 .vscode/*
+
+# ignore file multem, it made fatal error in git 
+multem
+
+# ignore files that are output of scripts
+# chapter13
+states
+test23
+users.csv
+# chapter14
+addem
+test
+# chapter15
+dir.wWKooK
+ch15-test2 
+ch15-test9err
+members.csv
+members.sql
+test13out
+test14out
+test17file
+test18file1
+test18file2
+test22file
+testerror
+testfile 
+testout
+# chapter16
+nohup.out 
+test6.out 
+test10.out 
+
+# ignore directories that are created using scripts
+dir-test6
