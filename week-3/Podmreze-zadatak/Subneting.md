@@ -127,14 +127,21 @@ OR sve do zadnje 0 u maski prepišemo, ostalo zapišemo 1
 **Pitanje, koliko je ostalo dostupnih adresa od originalne zadate adrese za podjelu?**
 
 Kako je adresa `10.1.16.0/20` imala 2na12 host adresa
+
 LAN 4 -> 2na10
+
 LAN 5 -> 2na9
+
 LAN1  -> 2na8
+
 LAN3  -> 2na7
+
 LAN2  -> 2na5
+
 
 1. način
 ODUZIMAMO
+
 2na12-2na10-2na9-2na8-2na7-2na5 = 2144 dostupne adrese
 
 2. način 
@@ -150,4 +157,12 @@ ODUZMEMO
 0 . 0. 8. 96 -> 0*256na3 + 0*256na2 + 8*256na1 + 96*256na0 = 2144 dostupne adrese
 ```
 
+Dodatak: 
+Na primjeru LAN 2 podmreže možete skratiti postupak određivanja broadcast adrese
 
+Kako nam za LAN 2 trebaju 32 adrese, zadnji broj iz adrese mreže LAN 2 možemo sabrati sa 32.
+Ako broj ne prelazi 255, onda možemo napisati zadnji broj broadcast adrese kao (zbir -1) a ostalo prepisati.
+Ako broj prelazi 255, onda radite klasični postupak sa inverznom maskom.
+
+
+ 
