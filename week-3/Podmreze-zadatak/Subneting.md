@@ -102,7 +102,7 @@ OR sve do zadnje 0 u maski prepišemo, ostalo zapišemo 1
 ```
 *`10.1.` je dio koji se ne mijenja jer su ispod 0 u maski pa ga napišem skraćeno, da ne trošim vrijeme za prebacivanje u binarni oblik*
 
-**opseg validnih adresa: 10.1.16.1 - 10.1.16.254** (jedna više od adrese mreže, jedna manje od broadcast adrese)
+**opseg validnih adresa: 10.1.16.1 - 10.1.19.254** (jedna više od adrese mreže, jedna manje od broadcast adrese)
 
 # LAN 5
 Lan 5 je druga po redu podmreža koju kreiramo. 
