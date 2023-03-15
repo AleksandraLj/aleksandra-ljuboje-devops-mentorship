@@ -107,6 +107,7 @@ OR sve do zadnje 0 u maski prepišemo, ostalo zapišemo 1
 # LAN 5
 Lan 5 je druga po redu podmreža koju kreiramo. 
 Zahtjeva: 300 + 2 = 302 adrese -> 2na9 = 512 adresa
+
 Maska: 32 - 9 = 23 -> **/23**
 
 Adresa mreže LAN 5 je za 1 veća od **broadcast adrese LAN 4 tj. prethodne podmreže**
