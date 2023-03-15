@@ -146,23 +146,27 @@ ODUZIMAMO
 
 2. način 
 
-broadcast adresa mreže `10.1.16.0/20` je 10.1.31.255 /20
-broadcast adresa zadnje podmreže tj. LAN2 je 10.1.23.159 /27
+broadcast adresa mreže `10.1.16.0/20` je
+ 10.1.31.255 /20
+
+broadcast adresa zadnje podmreže tj. LAN2 je
+ 10.1.23.159 /27
 
 ```bash
 ODUZMEMO
 10. 1. 31. 255
 10. 1. 23. 159
 -------------
-0 . 0. 8. 96 -> 0*256na3 + 0*256na2 + 8*256na1 + 96*256na0 = 2144 dostupne adrese
+0 . 0. 8. 96 
+-> 0*256na3 + 0*256na2 + 8*256na1 + 96*256na0 = 2144 dostupne adrese
 ```
 
-Dodatak: 
+*Dodatak:*
 Na primjeru LAN 2 podmreže možete skratiti postupak određivanja broadcast adrese
 
-Kako nam za LAN 2 trebaju 32 adrese, zadnji broj iz adrese mreže LAN 2 možemo sabrati sa 32.
-Ako broj ne prelazi 255, onda možemo napisati zadnji broj broadcast adrese kao (zbir -1) a ostalo prepisati.
-Ako broj prelazi 255, onda radite klasični postupak sa inverznom maskom.
+* Kako nam za LAN 2 trebaju 32 adrese, zadnji broj iz adrese mreže LAN 2 možemo sabrati sa 32.
+* Ako broj ne prelazi 255, onda možemo napisati zadnji broj broadcast adrese kao (zbir -1) a ostalo prepisati.
+* Ako broj prelazi 255, onda radite klasični postupak sa inverznom maskom.
 
 
 ## Binarna konverzija IP adresa
