@@ -183,39 +183,39 @@ Kako računate broj **192**
 
 *Pravilo je, ako je broj veći ili jednak vrijednosti pozicije upiši 1, ako je manje 0 i pređi na sljedeći i uporedi*
 
-Primjer za 192
+**Primjer za 192**
 
-x x x x x x x x.  na početku imamo ovo
+`x x x x x x x x.` na početku imamo ovo
 
 192 > 128 
-1 x x x x x x x.   -> 192 -128 = 64 
+`1 x x x x x x x.`   -> 192 -128 = 64 
 
-1 1 0 0 0 0 0 0. -> ostale x upišemo nule jer smo dobili broj 192 sabiranjem 128 i 64
+`1 1 0 0 0 0 0 0.` -> ostale x upišemo nule jer smo dobili broj 192 sabiranjem 128 i 64
 
 
 **Primjer za 168**
 
-x x x x x x x x.
+`x x x x x x x x.`
 
 168 >=128 jeste, upiši 1 na tu poziciju
 
-1 x x x x x x x. -> 168 -128 = 40
+`1 x x x x x x x.` -> 168 -128 = 40
 
 40 >= 64, nije upisi 0
 
-1 0 x x x x x x x.
+`1 0 x x x x x x x.`
 
 40>= 32, jeste upiši 1
-1 0 1 x x x x x.  -> 40 -32 = 8
+`1 0 1 x x x x x.`  -> 40 -32 = 8
 
 8>= 16, nije upiši 0 i idi dalje
 
-1 0 1 0 x x x x.
+`1 0 1 0 x x x x.`
 
 8>= 8 jeste upiši 1 
 
-1 0 1 0 1 x x x.  -> 8-8 = 0 ostala mjesta 0
-1 0 1 0 1 0 0 0. 
+`1 0 1 0 1 x x x.`  -> 8-8 = 0 ostala mjesta 0
+`1 0 1 0 1 0 0 0.`
 
 Saberemo 128 + 32 + 8 = 168
 
