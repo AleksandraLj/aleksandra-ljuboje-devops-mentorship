@@ -210,6 +210,7 @@ Kako računate broj **192**
 `1 0 x x x x x x x.`
 
 40>= 32, jeste upiši 1
+
 `1 0 1 x x x x x.`  -> 40 -32 = 8
 
 
