@@ -111,6 +111,7 @@ Zahtjeva: 300 + 2 = 302 adrese -> 2na9 = 512 adresa
 Maska: 32 - 9 = 23 -> **/23**
 
 Adresa mreže LAN 5 je za 1 veća od **broadcast adrese LAN 4 tj. prethodne podmreže**
+
 Kako je broadcast adresa LAN 4 `10.1.19.255`  za jedan veća je `10.1.20.0`
 
 ```bash
