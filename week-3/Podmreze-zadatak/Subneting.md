@@ -165,4 +165,58 @@ Ako broj ne prelazi 255, onda možemo napisati zadnji broj broadcast adrese kao 
 Ako broj prelazi 255, onda radite klasični postupak sa inverznom maskom.
 
 
- 
+## Binarna konverzija IP adresa
+
+Za pretvaranje IP adrese u binarni oblik,koristim ova dva načina i meni lično su najlakši.
+
+Kako je Boris objasnio, IP adresa ima 4 bloka
+`192.168.0.101` i oni su odvojeni tačkom. 
+
+Pri konverziji u binarni oblik, svaki ovaj broj do tačke se mijenja sa 8 binarnih cifara - kombinacije 0 i 1.
+
+Svaka od tih 8 pozicija ima vrijednost 2na7 do 2na 0 -> gledajući s lijeva u desno tj.
+
+vrijednosti su:
+*128 64 32 16 8 4 2 1* 
+
+Kako računate broj **192**
+
+*Pravilo je, ako je broj veći ili jednak vrijednosti pozicije upiši 1, ako je manje 0 i pređi na sljedeći i uporedi*
+
+Primjer za 192
+
+x x x x x x x x.  na početku imamo ovo
+
+192 > 128 
+1 x x x x x x x.   -> 192 -128 = 64 
+
+1 1 0 0 0 0 0 0. -> ostale x upišemo nule jer smo dobili broj 192 sabiranjem 128 i 64
+
+
+**Primjer za 168**
+
+x x x x x x x x.
+
+168 >=128 jeste, upiši 1 na tu poziciju
+
+1 x x x x x x x. -> 168 -128 = 40
+
+40 >= 64, nije upisi 0
+
+1 0 x x x x x x x.
+
+40>= 32, jeste upiši 1
+1 0 1 x x x x x.  -> 40 -32 = 8
+
+8>= 16, nije upiši 0 i idi dalje
+
+1 0 1 0 x x x x.
+
+8>= 8 jeste upiši 1 
+
+1 0 1 0 1 x x x.  -> 8-8 = 0 ostala mjesta 0
+1 0 1 0 1 0 0 0. 
+
+Saberemo 128 + 32 + 8 = 168
+
+**Lakši način, da odmah računate broj, upišete sebi iznad pozicija vrijednosti pozicija i stavljate 1 kod brojeva koji u zbiru daju traženi broj** 
