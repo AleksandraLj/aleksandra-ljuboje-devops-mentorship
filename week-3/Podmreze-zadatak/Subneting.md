@@ -48,7 +48,7 @@ tj. samo dvije 1 daju 1, ostalo 0.
 ```
 **Olakšica za određivanje adrese mreže:**
 
-Za adresu mreže - sve gdje su 1 u **maski**  te brojeve prepiši iz ip adrese dole, ostalo računaš po pravilima iz AND tabele
+Za adresu mreže - sve do zadnje 1 u **maski**  te brojeve prepiši iz ip adrese dole, ostalo računaš po pravilima iz AND tabele tj. ostalo je 0. 
 
 ```bash
 OR
@@ -60,7 +60,7 @@ samo 00 je 0, ostalo 1
 ```
 **Olakšica za određivanje broadcast adrese**
 
-Sve dokle su 0 u **inverznoj maski** prepiši, ostalo je 1
+Sve do zadnje 0 u **inverznoj maski** prepiši, ostalo je 1
 
 
 # LAN 4
