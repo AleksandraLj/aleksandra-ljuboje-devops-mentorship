@@ -13,6 +13,7 @@ Kolege evo jedan primjer na kojem možete provježbati **kreiranje podmreža**
 
 **LAN4 - 600 host +2 (adr.mreže i broadcast) = 602 adrese -> 2na10** je najbliži veći broj tj. **1024**
     * Iz **2na10** znamo masku za ovu podmrežu -> **32 - 10 =22 dakle maska za LAN4 je /22**
+    
 *Postupak ponovimo za sve LAN podmreže*
 
 
