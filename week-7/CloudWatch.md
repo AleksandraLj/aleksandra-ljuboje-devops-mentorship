@@ -15,17 +15,28 @@
 1. Regiju promjenimo u `North Virginia` tj. `us-east-1`
 2. `Cloud Watch` -> `Alarms`-> `Billing`-> `Create Alarm`
 3. Za polja izaberemo:
+4. 
 `Metric Name` -> `EstimatedCharges`
+
 `Currency`    -> `USD`
+
 `Statistics`    -> `Maximum`
+
 `Period`    -> `6hours` za `Maximum` 
+
 4. `Conditions` biramo:
+
 `Threshold type` -> `Static`
+
 `Whenever EstimatedCharges is...` -> `Greater`
+
 `than…` -> `5 USD`
+
 5. `Notification` 
 * koje stanje CW alarma ce nam poslati notifikaciju
+
 `Alarm state trigger` -> `In alarm` ako je alarm u stanju alarma
+
 `Send a notification to the following SNS topic` -> `Create New Topic` -> **predjemo na korake za kreiranje sns topic**
 6. `Create alarm`i dodamo naziv 
 
