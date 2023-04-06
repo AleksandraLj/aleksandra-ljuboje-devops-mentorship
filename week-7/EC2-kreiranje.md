@@ -9,9 +9,13 @@
 * Kreirajte EC2 instancu tipa `t2.micro` koristeci **AMI Image** `Amazon Linux 3` gdje vasa EC2 instanca da ima sljedece osobine:
 
 `Name`: `ec2-ime-prezime-web-server`
-`Security Group` sa inbound pravilima koja dozvoljavaju sav dolazni saobracaj za portove: `22` i `80` 
+
+`Security Group` sa inbound pravilima koja dozvoljavaju sav dolazni saobracaj za portove: `22` i `80`
+
 Ime za Security Group je -> `sec-group-web-server`
+
 `Key Pair Name`-> `ime-prezime-web-server-key`
+
 `EBS volume size` -> `14 GiB gp3`
 
 1. Prebacimo se na `eu-central-1` region ako već nismo
@@ -46,9 +50,13 @@ Pod `Resource Type` izaberemo na šta se odnose naši tagovi, jer Instanca ima v
 * Izaberemo sljedece:
 
     `Key pair name` je `ime-prezime-web-server-key`
+    
     `Key pair type` -> `ED25519`
+    
     `Private key file format` -> `.pem` for use with OpenSSH ili `.ppk` for use with Putty i tada treba odabratii RSA kao `key pair type` jer drugi nije podržan od strane Windows Instance
+    
     -> `Create key pair`
+    
 
 7. Ovorimo `key-pair` koji se preuzeo automatski na naš računar i vidimo da smo dobili `privatni ključ`. Sačuvamo za kasnije.
 
@@ -57,32 +65,52 @@ Ostavimo sve `default` postavke do dijela `Security group`
 
 9. `Firewall (Security group)`
 * na nivou EC2 instance kreiramo Firewall, tj. inbound i outbound pravila koja služe da regulišu sve dolazne/odlazne događaje (logovanje korisnika, čitanje podataka itd.)
+
 Kliknemo na `Edit` u gornjem desnom dijelu 
+
 -> `Create security group`
+
  `Name` ->`sec-group-web-server`
+ 
  `Description` -> `Security group used for EC2 instance created by Aleksandra Ljuboje`
+ 
 
     -> `Security group rule`
+    
     `Type` -> `SSH`
+    
     `Protocol` -> `TCP`
+    
     `Port range` -> `22`
+    
     `Source type` -> `Anywhere`
+    
     `Description` -> `Allow SSH Access from anywhere`
+    
 
 
      ---  **Da dodamo i za port 80** ---
+     
 
     -> Kliknemo na `Add security group rule`
+    
     `Type` -> `HTTP`
+    
     `Protocol` -> `TCP`
+    
     `Port range` -> `80`
+    
     `Source type` -> `Anywhere`
+    
     `Description` -> `Allow http Access from anywhere`
+    
 10. `Configure storage`
+11. 
 * do 30GiB je  `Free tier eligible`
 * `gp3` General purpose SSD 
 * Rečeno je `EBS volume size` -> `14 GiB gp3`
 * Kada koristimo `EBS` Elastic Block Storage nije ovisan o EC2 instanci te ukoliko istu terminiramo, Storage će naastaviti da postoji. Takođe, nekoj novoj EC2 instanci možemo bridružiti isti taj Storage
+* 
 
     -> **Podesimo sljedeće**
     1x `14` GiB `gp3`
