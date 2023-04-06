@@ -110,6 +110,7 @@ $ node -v # Check Node.js version
 $ sudo yum install -y gcc-c++ make # Install build tools
 ```
 --- **Instalacija node i npm za Ubuntu** ---
+
 ---- **Setting Up Node.js on an Amazon EC2 Instance** ----
 * Dostupno na linku: 
 https://docs.aws.amazon.com/sdk-for-javascript/v2/developer-guide/setting-up-node-on-ec2-instance.html
@@ -173,7 +174,9 @@ $ pm2 status # status aplikacija
 
 `node-app.conf` - predstavlja konfiguracijski fajl gdje smo unutar `server` bloka definisali jedan virtuealni server koji ce da obradjuje `HTTP` zahtjeve koji stizu na port `80` i proslijedjuje ih na Node.js server koji slusa na portu `3000`
 
+
 Potreban nam je novi `config` fajl koji smještamo u folder `conf.d`
+
 
 NGINX setup
 ```bash
