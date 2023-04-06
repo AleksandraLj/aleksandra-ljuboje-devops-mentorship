@@ -1,6 +1,6 @@
 *week-1 devops mentorship program*
 
-# Rad sa GitHub-om
+# [![My Skills](https://skillicons.dev/icons?i=git)](https://skillicons.dev) Rad sa GitHub-om 
 * U nastavku su prikazani koraci za:
     * Kreiranje lokalnog `git` repozitorija na računaru
     * Kreiranje GitHub profila
