@@ -22,8 +22,11 @@ Ime za Security Group je -> `sec-group-web-server`
 2. U EC2 Dashboard -> `Launch Instance`
 3. Dodamo ime -> `ec2-aleksandra-ljuboje-web-server`
 4. Dodamo tagove
+
 `CreatedBy` ->  `Ime Prezime`
+
 `Email` -> `vas@email.com`
+
 Pod `Resource Type` izaberemo na šta se odnose naši tagovi, jer Instanca ima više property-a -> Mi izaberemo `Instances`
 4. U `Aplication and OS Images (Amazon Machine Image)` izaberemo `Amazon Linux 3`
 * ***AMI je template na osnovu kojeg kreiramo EC2 instancu kasnije i sadrži podatke o OS kojeg ćemo koristiti i od slike kreira EC2 instancu koja ima iste karakteristike kao izabrani Image.***
@@ -66,46 +69,46 @@ Ostavimo sve `default` postavke do dijela `Security group`
 9. `Firewall (Security group)`
 * na nivou EC2 instance kreiramo Firewall, tj. inbound i outbound pravila koja služe da regulišu sve dolazne/odlazne događaje (logovanje korisnika, čitanje podataka itd.)
 
-Kliknemo na `Edit` u gornjem desnom dijelu 
+* Kliknemo na `Edit` u gornjem desnom dijelu 
 
 -> `Create security group`
 
  `Name` ->`sec-group-web-server`
  
  `Description` -> `Security group used for EC2 instance created by Aleksandra Ljuboje`
- 
+ * Kod -> `Security group rule`
 
-    -> `Security group rule`
     
-    `Type` -> `SSH`
     
-    `Protocol` -> `TCP`
+ `Type` -> `SSH`
     
-    `Port range` -> `22`
+ `Protocol` -> `TCP`
     
-    `Source type` -> `Anywhere`
+ `Port range` -> `22`
     
-    `Description` -> `Allow SSH Access from anywhere`
+ `Source type` -> `Anywhere`
+    
+ `Description` -> `Allow SSH Access from anywhere`
     
 
 
-     ---  **Da dodamo i za port 80** ---
+   ---  **Da dodamo i za port 80** ---
      
 
-    -> Kliknemo na `Add security group rule`
+ -> Kliknemo na `Add security group rule`
     
-    `Type` -> `HTTP`
+ `Type` -> `HTTP`
     
-    `Protocol` -> `TCP`
+ `Protocol` -> `TCP`
     
-    `Port range` -> `80`
+ `Port range` -> `80`
     
-    `Source type` -> `Anywhere`
+ `Source type` -> `Anywhere`
     
-    `Description` -> `Allow http Access from anywhere`
+ `Description` -> `Allow http Access from anywhere`
     
 10. `Configure storage`
-11. 
+
 * do 30GiB je  `Free tier eligible`
 * `gp3` General purpose SSD 
 * Rečeno je `EBS volume size` -> `14 GiB gp3`
@@ -116,6 +119,7 @@ Kliknemo na `Edit` u gornjem desnom dijelu
     1x `14` GiB `gp3`
 
 11. `Advanced details` **možemo preskočiti**, ali primjer šta se može uraditi u tom dijelu. Dodamo kao skriptu u kojoj se nalaze komande koje je potrebno izvršiti pri pokretanju EC2 instance. 
+
 ![ec2-instance-naming](img/advanced-settings.png)
 
 
