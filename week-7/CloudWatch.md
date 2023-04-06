@@ -15,6 +15,7 @@
 1. Regiju promjenimo u `North Virginia` tj. `us-east-1`
 2. `Cloud Watch` -> `Alarms`-> `Billing`-> `Create Alarm`
 3. Za polja izaberemo:
+
 `Metric Name` -> `EstimatedCharges`
 
 `Currency`    -> `USD`
