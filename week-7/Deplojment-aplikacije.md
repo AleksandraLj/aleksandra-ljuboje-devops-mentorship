@@ -2,13 +2,16 @@
 
 **TASK**
 https://github.com/allops-solutions/devops-aws-mentorship-program/issues/45
+
 **Node-js-app**
 https://github.com/allops-solutions/nodejs-simple-app
 
 # Deployment aplikacije na Amazon Linux 2023
 
 `$ cd Downloads` pozicioniramo se u `Downloads` gdje nam se nalazi `.pem` ključ/ključevi
+
 `$ chmod 600 *.pem` dodijelimo privilegije svim `.pem` fajlovima samo za r+w na owner
+
 `$ ssh -i "key.pem" ec2-user@ec2-public-ip` uz `yes` odgovor na pitanje
 
 --- **spojeni smo na EC2 instancu** ---
