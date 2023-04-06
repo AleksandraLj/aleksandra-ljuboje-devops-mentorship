@@ -113,10 +113,10 @@ Ostavimo sve `default` postavke do dijela `Security group`
 * `gp3` General purpose SSD 
 * Rečeno je `EBS volume size` -> `14 GiB gp3`
 * Kada koristimo `EBS` Elastic Block Storage nije ovisan o EC2 instanci te ukoliko istu terminiramo, Storage će naastaviti da postoji. Takođe, nekoj novoj EC2 instanci možemo bridružiti isti taj Storage
-* 
 
-    -> **Podesimo sljedeće**
-    1x `14` GiB `gp3`
+
+ -> **Podesimo sljedeće**
+   1x `14` GiB `gp3`
 
 11. `Advanced details` **možemo preskočiti**, ali primjer šta se može uraditi u tom dijelu. Dodamo kao skriptu u kojoj se nalaze komande koje je potrebno izvršiti pri pokretanju EC2 instance. 
 
