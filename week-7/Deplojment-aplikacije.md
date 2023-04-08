@@ -141,7 +141,9 @@ Running Node.js VERSION
 4. `$ node app.js` da pokrenemo aplikaciju 
 5. `$ ps aux | grep node` da provjerimo da li se aplikacija pokrenula gdje smo vidjeli da aplikacija nije pokrenuta
 6. `$ node server.js` 
-Aplikacija bi se trebala prikazati kada ukucamo u browser `http://ip-adresa:8008`
+Aplikacija bi se trebala prikazati kada ukucamo u browser `http://ip-adresa:8008` 
+* Ako ne uspijete pokrenuti app nakon ovog koraka, instalirajte `pm2` i pokrenite app u *Incognito mode* ili drugom browseru. 
+
 
 ### Instalacija pm2 
 
@@ -150,7 +152,8 @@ Aplikacija bi se trebala prikazati kada ukucamo u browser `http://ip-adresa:8008
 $ npm install -g pm2 # Install pm2 process manager
 $ pm2 start server.js # Start Node.js application
 ```
-Aplikaciju pokrećemo sada pomoću **pm2** gdje je u pozadini pokrenut naš proces. 
+* Aplikaciju pokrećemo sada pomoću **pm2** gdje je u pozadini pokrenut naš proces. 
+* Koristiti *Incognito mode* ili drugi browser i kucati `http://ip-adresa` ili `http://ip-adresa:8008` 
 
 --- **Dodatne opcije koje možemo provjeriti sa *pm2*** ---
 
