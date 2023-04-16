@@ -2,7 +2,7 @@
 
 ## Povezivanje na EC2 instancu od koje kreiramo AMI
 * Na slici vidimo uspjesan pristup instanci i nginx serveru
-![slika](img/task%207/povezivanje_na_originalnuEC2.png)
+![slika](img/"task 7"/povezivanje_na_originalnuEC2.png)
 
 ## Povezivanje na  EC2 instancu kreirane od AMI image-a
 * Na slici vidimo uspjesan pristup instanci i nginx serveru
