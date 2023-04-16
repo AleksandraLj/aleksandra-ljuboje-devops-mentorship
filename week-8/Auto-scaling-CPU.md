@@ -2,17 +2,21 @@
 
 ## Povezivanje na EC2 instancu od koje kreiramo AMI
 * Na slici vidimo uspjesan pristup instanci i nginx serveru
+
 ![slika](week-8/img/task%207/povezivanje_na_originalnuEC2.png)
 
 ## Povezivanje na  EC2 instancu kreirane od AMI image-a
 * Na slici vidimo uspjesan pristup instanci i nginx serveru
+
 ![slika](img/task%207/ami-ec2-browser-nginx.png)
 
 ## DNS record ALB 
 * Na slici vidimo kreiran Application Load Balancer
+
 ![slika](img/task%207/dns-record.png)
 
 ## Kreiran Template za ASG
+
 ![slika](img/task%207/created_ASG_template.png)
 
 ## Kreirana Auto scaling group
