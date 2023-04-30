@@ -120,7 +120,7 @@ Nakon par minuta bi certifikat trebao biti `Issued`
 
 ```bash
 # Route 53 configuration:
-`aws route53 change-resource-record-sets --hosted-zone-id Z3LHP8UIUC8CDK --change-batch '{"Changes":[{"Action":"CREATE","ResourceRecordSet":{"Name":"www.aleksandra-ljuboje.awsbosnia.com","Type":"CNAME","TTL":60,"ResourceRecords":[{"Value":"https://dv97pz9qp7uan.cloudfront.net/"}]}}]}'` 
+`aws route53 change-resource-record-sets --hosted-zone-id Z3LHP8UIUC8CDK --change-batch '{"Changes":[{"Action":"CREATE","ResourceRecordSet":{"Name":"www.aleksandra-ljuboje.awsbosnia.com","Type":"CNAME","TTL":60,"ResourceRecords":[{"Value":"dv97pz9qp7uan.cloudfront.net"}]}}]}'` 
 ```
 ![cf](files/awscli-cf-d.png)
 
