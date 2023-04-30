@@ -69,6 +69,7 @@ Prikaz website-a :
 
 
 **Prije nego predjemo na kreiranje Cloud Front-a, potrebno je kreirati ACM certifikat na nacin kako je to radjeno u TASK -8**
+* **Napomena: kreirati ACM certifikat u regiji `us-east-1` kada koristimo CloudFront**
 
 * `ACM -> Request certificate ->`
     * `Fully qualified domain name` - `www.ime-prezime.awsbosnia.com`
