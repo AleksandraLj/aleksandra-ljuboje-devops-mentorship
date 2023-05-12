@@ -393,7 +393,7 @@ Odemo u LB i na opciju `Add listener`
 
 `Listener details`
 * `HTTPS`, `443`
-*  Defaukt action - forward 
+*  Default action - forward 
 * izaberemo našu target group
 
 `Secure listener settings`
