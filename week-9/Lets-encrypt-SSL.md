@@ -73,7 +73,7 @@ Za ovaj dio taska mozete da iskorisite `change-resource-record-sets` AWS CLI kom
 Kako je na EC2 instanci već instaliran AWS CLI prelazimo na konfigurisanje, više o kreiranju na [linku](https://docs.aws.amazon.com/toolkit-for-visual-studio/latest/user-guide/keys-profiles-credentials.html)
 
 **Obavezno biti na `root` korisniku `$ sudo su -`**
-1. `$ aws configure`
+1. `$ aws configure` i `$ aws configure --profile aws-bosnia` 
 Za `AWS Access Key ID` i `Secret Access Key` unosimo podatke koje smo dobili u excel file-u u TASK 8.
 `Default region name` - `eu-central-1` za IAM 1
 `Default output format` - `json` radi lakšeg prikaza
@@ -302,9 +302,9 @@ $ cd /etc/letsencrypt/live/ime-prezime.awsbosnia.com/
 ![certifikat-certbot](files/kljucevi-certifikat.png)
 
 2. U AWS-u, odemo na ACM i importujemo certifikat na način da kopiramo ključeve iz terminala u odgovarajuća polja
-`Certificate body` - `cert.pem`
-`Certificate private key` - `privkey.pem`
-`Certificate chain` - `fullchain.pem`
+* `Certificate body` - `cert.pem`
+* `Certificate private key` - `privkey.pem`
+* `Certificate chain` - `fullchain.pem`
 
 ![certifikat-certbot](files/import_certificate.png)
 
@@ -393,6 +393,7 @@ Odemo u LB i na opciju `Add listener`
 
 `Listener details`
 * `HTTPS`, `443`
+*  Defaukt action - forward 
 * izaberemo našu target group
 
 `Secure listener settings`
