@@ -1,0 +1,29 @@
+# This playbook outputs with error "Connection closed by foreign host."], 
+#"stdout": "Trying 35.158.198.204...\r\nConnected to 35.158.198.204.\r\nEscape character is '^]'.\r\nE\u0000\u0000\u0000\u0004Host 
+#'35.159.24.93' is not allowed to connect to this MySQL server"
+
+- name: Verify MySQL connection using telnet
+  hosts: webservers_cf, webservers_tf
+  become: yes
+  tasks:
+    - name: Install telnet
+      ansible.builtin.shell: yum install -y telnet
+
+    - name: Check MySQL connection to db-server-cf
+      command: telnet 35.158.198.204 3306
+      ignore_errors: true
+      register: result_cf
+
+    - name: Check MySQL connection to db-server-tf
+      command: telnet 35.158.198.204 3306
+      ignore_errors: true
+      register: result_tf
+
+    - name: Display connection status
+      debug:
+        msg: |
+          Connection status to db-server-cf:
+          {{ 'SUCCESS' if result_cf.rc == 0 else 'FAILED' }}
+
+          Connection status to db-server-tf:
+          {{ 'SUCCESS' if result_tf.rc == 0 else 'FAILED' }}

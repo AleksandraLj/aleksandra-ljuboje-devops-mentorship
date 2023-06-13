@@ -1,0 +1,37 @@
+---
+- name: Provision AWS
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  vars:
+    region: eu-central-1
+    instance_type: t2.micro
+    keypair: packer-proba
+    stack_name: cf-task-12
+    
+    inventory_path: " ~/task-12/ansible_playbooks/inventory/prod.ini"  # Modify with your desired inventory path
+
+
+  tasks:
+    - name: Get instance info
+      ec2_instance_info:
+        region: "{{ region }}"
+        filters:
+          "tag:Key": "aws:cloudformation:stack-name"
+          "tag:Value": "cf-task-12"
+          instance-state-name: [ "running" ]
+        profile: "aleksIaC"
+      register: ec2_list  
+
+    - name: Display EC2 instances
+      debug:
+        var: ec2_list.instances
+
+    - name: Add EC2 instance public IDs to inventory file
+      lineinfile:
+        path: "{{ inventory_path }}"
+        line: "{{ item.public_ip_address }}"
+      loop: "{{ ec2_list.instances }}"
+
+
+

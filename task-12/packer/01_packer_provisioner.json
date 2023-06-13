@@ -1,0 +1,29 @@
+{
+    "builders": [{
+      "type": "amazon-ebs",
+      "region": "eu-central-1",
+      "profile": "aleksIaC",
+      "source_ami": "ami-0122fd36a4f50873a",
+      "instance_type": "t2.micro",
+      "ssh_username": "ec2-user",
+      "temporary_key_pair_type": "ed25519",
+      "ami_name": "packer-mentorship-task12 {{timestamp}}",
+      "tags": {
+        "Name": "task-12-web-server-cf",
+        "CreatedBy": "aleksandra.ljuboje",
+        "Project": "task-12",
+        "IaC": "Packer"
+      }
+
+    }],
+    "provisioners": [
+        {
+            "type": "shell",
+            "script": "./shell-scripts/install-nginx.sh"  
+        }, 
+        {
+          "type": "shell",
+          "script": "./shell-scripts/install-mysql.sh"  
+      }
+    ]
+}

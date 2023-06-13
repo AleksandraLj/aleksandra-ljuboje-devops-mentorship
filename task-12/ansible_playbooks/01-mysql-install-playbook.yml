@@ -1,0 +1,20 @@
+- name: DB servers playbook
+  hosts: dbservers
+  become: yes
+
+  tasks:
+    - name: Copy sh script
+      copy:
+        src: mysql-script.sh
+        dest: /home/ec2-user/mysql-yum-repo.sh
+        owner: root
+        group: root
+        mode: 0777
+
+    - name: Run sh script
+      shell: /home/ec2-user/mysql-yum-repo.sh
+
+    - name: Install mysql
+      dnf:
+        name: mysql-community-server
+        state: latest
