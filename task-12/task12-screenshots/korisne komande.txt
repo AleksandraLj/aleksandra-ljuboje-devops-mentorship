@@ -1,0 +1,1 @@
+$ whereis python3 # lokacija python3 direktorija

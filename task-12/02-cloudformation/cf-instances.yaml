@@ -1,0 +1,99 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: Setup enivorment with EC2 instances using CF
+Parameters:
+  KeyName:
+    Description: Name of an existing EC2 KeyPair to enable SSH access
+    Type: 'AWS::EC2::KeyPair::KeyName'
+    Default: packer-proba
+Mappings:
+  RegionMap:
+    eu-central-1:
+      test: "ami-09ecc100363951e6a" # Custom AMI created using Packer tool
+Resources:
+  WebInstanceSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable HTTP/SSH Access
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp: 0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+     
+  
+  DbInstanceSG:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable DB/SSH Access
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 22
+          ToPort: 22
+          CidrIp:  0.0.0.0/0
+        - IpProtocol: tcp
+          FromPort: 3306
+          ToPort: 3306
+          CidrIp:  0.0.0.0/0
+      
+          
+
+  webserver:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !FindInMap ["RegionMap", !Ref "AWS::Region", "test" ]
+      InstanceType: t2.micro
+      KeyName: !Ref "KeyName"
+      SecurityGroupIds:
+        - !Ref WebInstanceSG
+      
+      Tags:
+        - Key: Name
+          Value: task-12-web-server-cf
+        - Key: CreatedBy
+          Value: aleksandra.ljuboje
+        - Key: Project
+          Value: task-12 
+        - Key: IaC 
+          Value: CloudFormation 
+        - Key: "env"
+          Value: "dev"
+        - Key: "app"
+          Value: "web"
+
+  dbserver:
+    Type: AWS::EC2::Instance
+    Properties:
+      ImageId: !FindInMap ["RegionMap", !Ref "AWS::Region", "test" ]
+      InstanceType: t2.micro
+      KeyName: packer-proba
+      SecurityGroupIds:
+        - !Ref DbInstanceSG
+     
+      Tags:
+        - Key: Name
+          Value: task-12-db-server-cf
+        - Key: CreatedBy
+          Value: aleksandra.ljuboje
+        - Key: Project
+          Value: task-12 
+        - Key: IaC 
+          Value: CloudFormation 
+        - Key: "env"
+          Value: "dev"
+        - Key: "app"
+          Value: "db"
+Outputs:
+  StackName:
+    Description: CF Stack Name
+    Value: !Ref "AWS::StackName"
+  WebInstancePublicIP:
+    Description: Web Instance Public IP adress
+    Value: !GetAtt webserver.PublicIp
+  DbInstancePublicIP:
+    Description: DB Instance Public IP adress
+    Value: !GetAtt dbserver.PublicIp
+  

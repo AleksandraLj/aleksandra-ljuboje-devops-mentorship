@@ -1,0 +1,8 @@
+QZhk7--d;-4D
+Task-12-password
+export MYSQL_ROOT_PASSWORD='QZhk7--d;-4D'
+export MYSQL_ROOT_PASSWORD=Task-12-password
+
+show grants for 'task-12-user'@'localhost';
+select user, host from mysql.user;
+show databases;
