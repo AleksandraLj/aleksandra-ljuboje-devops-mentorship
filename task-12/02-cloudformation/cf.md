@@ -92,8 +92,12 @@ Outputs:
 ```
 - Ovdje je prikazan kod za ispis output-a sa potrebnim podacima. Ovime je olaksano kreiranje inventory file-a jer odmah vidimo koje su to Public Ip adrese nasih kreiranih instanci
 
-![cf-output](task12-screenshots/cf/cf-stack-created-output.png)
+![cf-output](../task12-screenshots/cf/cf-stack-created-output.png)
 
 * Kreirane instance `task-12-web-server-cf` i `task-12-db-server-cf`
 
-![cf-output](task12-screenshots/cf/kreirane-instance.png)
+![cf-output](../task12-screenshots/cf/kreirane-instance.png)
+
+
+## Brisanje resursa
+- Potrebno je samo obrisati CF stack i svi kreirani resursi ce biti obrisani 

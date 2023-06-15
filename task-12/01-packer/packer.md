@@ -131,7 +131,7 @@ Unesemo Access key, Secret Access key, Region i Json format
 #### U zadatku, Packer alat koristen je za kreiranje  Custom AMI image od Amazon Linux 3 AMI, gdje je potrebno instalirati i enable-ovati potrebne `yum` repozitorije za instalaciju `nginx` i `mysql` baze podataka. 
 
 * Potreban kod nalazi se u folderu `packer`
-![packer-folder](task12-screenshots/packer/packer-folder.png)
+![packer-folder](../task12-screenshots/packer/packer-folder.png)
 
 * U folderu `shell-scripts` nalaze se dvije odvojene skripte. 
 1. `install-nginx.sh` sa komandama potrebnim za enable `yum` repozitorija.
@@ -160,13 +160,13 @@ wget http://dev.mysql.com/get/mysql57-community-release-el7-8.noarch.rpm
 > Voditi racuna da pri pokretanju `packer build` budemo pozicionirani u direktorij gdje se nalazi **xx_packer_provisioners.json** file.
 * Output komande u terminalu
 
-![packer-folder](task12-screenshots/packer/ami-created.png)
+![packer-folder](../task12-screenshots/packer/ami-created.png)
 
 
 * Output komande u konzoli, gdje vidimo kreiran AMI image sa 
 potrebnim tagovima
 
-![packer-folder](task12-screenshots/packer/packer-ami-created.png)
+![packer-folder](../task12-screenshots/packer/packer-ami-created.png)
 
 
 

@@ -58,7 +58,7 @@ resource "aws_security_group" "webserver-sg" {
 - Na slici vidimo kreirane SecurityGroups pomocu Terraform-a.
 - Dodati su i odgovarajuci tagovi.
 
-![slika](task12-screenshots/tf/tf-sg-created.png)
+![slika](../task12-screenshots/tf/tf-sg-created.png)
 
 
 ### Kreiranje EC2 instanci
@@ -66,11 +66,22 @@ resource "aws_security_group" "webserver-sg" {
 - Na slici vidimo kreirane EC2 instance, sa pripadajucim SG pomocu Terraform-a.
 - Dodati su i odgovarajuci tagovi.
 
-![slika](task12-screenshots/tf/tf-instances-created.png)
+![slika](../task12-screenshots/tf/tf-instances-created.png)
 
 ### Output 
 - koristena je opcija output kako bi dohvatili ime i public ip za instance kreirane pomocu Terraform-a. Zatim su podaci rucno upisani u Ansible `inventory/prod.ini` file.
 
 - Na slici je prikaz koda i output-a
 
-![slika](task12-screenshots/tf/tf-outputs.png)
+![slika](../task12-screenshots/tf/tf-outputs.png)
+## Terraform komande
+```bash
+$ terraform init # inicijalizacija 
+$ terraform plan # dry run, da vidimo promjene prije nego ih primjenimo
+$ terraform apply # primjena promjena
+```
+
+## Brisanje resursa
+```bash
+$ terraform destroy # brisanje svih resursa
+```

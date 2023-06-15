@@ -1,4 +1,4 @@
-aleksandralj@LAPTOP-6KUKA9GT:~/task-12/ansible_playbooks$ pip show boto3ersion
+aleksandralj~/task-12/ansible_playbooks$ pip show boto3ersion
 Command 'pip' not found, but can be installed with:
 sudo apt install python3-pip
 

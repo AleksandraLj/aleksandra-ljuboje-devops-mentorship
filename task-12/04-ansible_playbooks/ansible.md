@@ -18,7 +18,7 @@ $ sudo add-apt-repository --yes --update ppa:ansible/ansible
 $ sudo apt install ansible
 $ ansible --version
 ```
-![slika](task12-screenshots/ansible/ansible-ubuntu.png)
+![slika](../task12-screenshots/ansible/ansible-ubuntu.png)
 
 ```bash
 $ ansible-config -h # sada je init opcija dostupna
@@ -29,7 +29,7 @@ $ ansible-config -h # sada je init opcija dostupna
 
 * Output komande
 
-![slika](task12-screenshots/ansible/ansible-cfg-created.png)
+![slika](../task12-screenshots/ansible/ansible-cfg-created.png)
 
 ## Rjesenje za TASK - 12
 
@@ -107,14 +107,14 @@ $ ansible-config -h # sada je init opcija dostupna
 `ansible-playbook -i inventory/prod.ini 00-nginx-install-playbook.yml`
 - Izmjena `index.html` fajla na `task-12-web-server-cf` instanci
 
-![slika](task12-screenshots/ansible/nginx-index.png)
+![slika](../task12-screenshots/ansible/nginx-index.png)
 - nginx status active - `systemctl status nginx`
 
-![slika](task12-screenshots/ansible/nginx-up-running.png)
+![slika](../task12-screenshots/ansible/nginx-up-running.png)
 
 - Izmjena `index.html` fajla na `task-12-web-server-tf` instanci
 
-![slika](task12-screenshots/ansible/tf-nginx.png)
+![slika](../task12-screenshots/ansible/tf-nginx.png)
 
 
 ### Instalacija mysql na db server instance
@@ -123,7 +123,7 @@ $ ansible-config -h # sada je init opcija dostupna
 - provjerimo repozitorije 
 `yum repolist enabled | grep "mysql.*-community.*"`
 
-![slika](task12-screenshots/ansible/mysql-repos.png)
+![slika](../task12-screenshots/ansible/mysql-repos.png)
 - `yum repolist all | grep mysql` 
 
 ### Kreiranje  baze, korisnika i dodjela privilegija 
@@ -191,24 +191,24 @@ export MYSQL_USER_PASSWORD=nova-sifra
 ```
 - output ansible playbook-a `ansible-playbook -i inventory/prod.ini 02-mysql-configure-playbook.yml`
 
-![slika](task12-screenshots/ansible/mysql-instance.png)
+![slika](../task12-screenshots/ansible/mysql-instance.png)
 - Baza `task-12-db` je kreirana
 
 - Komanda `$ show databases;`
 
-![slika](task12-screenshots/ansible/db-created-cf.png)
+![slika](../task12-screenshots/ansible/db-created-cf.png)
 
 
 - User `task-12-user` je kreiran
 - Komanda `$ select user, host from mysql.user;`
 
-![slika](task12-screenshots/ansible/created-user-cf.png)
+![slika](../task12-screenshots/ansible/created-user-cf.png)
 
 
 - Provjera privilegija za korisnika `task-12-user`
 - Komanda `$ show grants for 'task-12-user'@'localhost';`
 
-![slika](task12-screenshots/ansible/user-grants-cf.png)
+![slika](../task12-screenshots/ansible/user-grants-cf.png)
 
 >*Source*
 > MYSQL queries: https://www.shellhacks.com/mysql-show-users-privileges-passwords/
@@ -219,15 +219,15 @@ https://stackoverflow.com/questions/48272997/mysql-command-output-too-wide-in-co
 - Koristen je ansible playbook pod nazivom `02-check-conncection.yml`
 - instaliran je `telnet` koristeci komandu `yum install -y telnet` 
 - Output komande 
-![slika](task12-screenshots/ansible/connection-succesfull.png)
+![slika](../task12-screenshots/ansible/connection-succesfull.png)
 ### Errors 
 - :warning: trenutno nije moguce povezivanje na db instancu
-![slika](task12-screenshots/ansible/mysql-connection-error.png)
+![slika](../task12-screenshots/ansible/mysql-connection-error.png)
 - Error koji dobijam kao output komande `telnet` direktno sa web-server instance ka db-server instanci.
-![slika](task12-screenshots/ansible/verify-error-01.png)
+![slika](../task12-screenshots/ansible/verify-error-01.png)
 ### Netcat 
 - Instaliran je `netcat` 
 - Komanda `$ yum install nc -y`
 - **We can use `netcat` to scan for any open ports at a given IP address.**
 -Output, gdje vidimo da je konekcija uspostavljena 
-![slika](task12-screenshots/ansible/netcat-command.png)
+![slika](../task12-screenshots/ansible/netcat-command.png)
