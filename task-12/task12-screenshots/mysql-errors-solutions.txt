@@ -1,6 +1,0 @@
-[Error no1]
-"msg": "A MySQL module is required: for Python 2.7 either PyMySQL, or MySQL-python, or for Python 3.X mysqlclient or PyMySQL.
-Consider setting ansible_python_interpreter to use the intended Python version.
-
-[Solution]
-https://stackoverflow.com/questions/56313083/ansible-ubuntu-18-04-mysql-the-pymysql-python-2-7-and-python-3-x-or-mys
