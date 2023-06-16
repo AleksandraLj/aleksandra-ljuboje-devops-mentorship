@@ -1,0 +1,7 @@
+aleksandralj~/task-12/ansible_playbooks$ pip show boto3ersion
+Command 'pip' not found, but can be installed with:
+sudo apt install python3-pip
+
+pip show boto3ersion
+WARNING: Package(s) not found: boto3ersion
+aleksandralj@LAPTOP-6KUKA9GT:~/task-12/ansible_playbooks$ pip install boto3

@@ -1,0 +1,52 @@
+- name: Configure webserver with nginx
+  hosts: webservers_cf, webservers_tf
+  become: True
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    - name: Install nginx 
+      yum:
+        name: nginx
+        state: latest
+
+    - name: Start nginx
+      service: 
+        name: nginx
+        state: started
+        enabled: yes
+
+
+- name: Update index.html in CloudFormation webservers
+  hosts: webservers_cf
+  become: True
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+  
+    - name: copy index.html
+      template: src=templates/index_cf.html.j2 dest=/usr/share/nginx/html/index.html
+        mode=0644
+
+    - name: restart nginx
+      service: name=nginx state=restarted
+
+
+- name: Update index.html in Terraform webservers
+  hosts: webservers_tf
+  become: True
+  vars:
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+  
+    - name: copy index.html
+      template: src=templates/index_tf.html.j2 dest=/usr/share/nginx/html/index.html
+        mode=0644
+
+    - name: restart nginx
+      service: name=nginx state=restarted
+
+
+
+     
+
+      

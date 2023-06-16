@@ -1,0 +1,44 @@
+- name: Update dbserver instances 
+  hosts: dbservers
+  become: yes
+  vars:
+    mysql_db_name: task-12-db
+    mysql_user_name: task-12-user
+    mysql_user_password: "{{ lookup('env', 'MYSQL_USER_PASSWORD') }}"
+    mysql_root_username: root
+    mysql_root_password: "{{ lookup('env', 'MYSQL_ROOT_PASSWORD') }}"
+    ansible_python_interpreter: /usr/bin/python3
+  tasks:
+    - name: Install pip package manager
+      yum:
+        name: python3-pip
+        state: present
+
+    - name: Install pymysql module
+      pip:
+        name: pymysql
+        state: present
+        executable: pip3
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
+
+    - name: Kreiranje mysql baze
+      mysql_db:
+        name: "{{ mysql_db_name }}"
+        state: present
+        login_user: "{{ mysql_root_username }}"
+        login_password: "{{ mysql_root_password }}"
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
+
+    - name: Kreiranje mysql usera sa privilegijama
+      mysql_user:
+        name: "{{ mysql_user_name }}"
+        password: "{{ mysql_user_password }}"
+        priv: "{{ mysql_db_name }}.*:ALL"
+        state: present
+        login_user: "{{ mysql_root_username }}"
+        login_password: "{{ mysql_root_password }}"
+      vars:
+        ansible_python_interpreter: /usr/bin/python3
+    

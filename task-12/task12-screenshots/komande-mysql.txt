@@ -1,0 +1,7 @@
+
+export MYSQL_ROOT_PASSWORD=
+export MYSQL_ROOT_PASSWORD=
+
+show grants for 'task-12-user'@'localhost';
+select user, host from mysql.user;
+show databases;
