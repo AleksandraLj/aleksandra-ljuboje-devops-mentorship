@@ -16,5 +16,5 @@
 
     - name: Install mysql
       dnf:
-        name: mysql-community-server
+        name: mysql-community-server # testing 
         state: latest
