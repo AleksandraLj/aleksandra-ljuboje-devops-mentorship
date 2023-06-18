@@ -21,5 +21,5 @@
 
 </p>
 
->*Note*
+>**Note**
 > Files with explanation are written in native languages spoken in Bosnia and Hercegovina. 
