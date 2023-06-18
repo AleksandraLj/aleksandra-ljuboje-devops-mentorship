@@ -1,0 +1,31 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Parameters: 
+  AppName: 
+    Type: String
+    Description: Name of the beanstalk application.
+    Default: gitflow
+
+Resources:
+  BeanstalkApplication:
+    Type: AWS::ElasticBeanstalk::Application
+    Properties:
+      Description: AWS Elastic Beanstalk Sample Application
+      ApplicationName: 
+        Ref: AppName
+  ArtifactStoreBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      VersioningConfiguration:
+        Status: Enabled      
+Outputs:
+  BeanstalkApplication:
+    Description: Elastic Beanstalk Application Name
+    Value: !Ref BeanstalkApplication
+    Export:
+      Name: AppName
+      
+  ArtifactStoreBucket:
+    Description: S3 Bucket For Storing Artifacts
+    Value: !Ref ArtifactStoreBucket
+    Export:
+      Name: ArtifactStoreBucket  

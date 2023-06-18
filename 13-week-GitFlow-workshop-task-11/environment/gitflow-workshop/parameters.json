@@ -1,0 +1,14 @@
+[
+  {
+    "ParameterKey": "Environment",
+    "ParameterValue": "gitflow-workshop-master"
+  },
+  {
+    "ParameterKey": "RepositoryName",
+    "ParameterValue": "gitflow-workshop"
+  },
+  {
+    "ParameterKey": "BranchName",
+    "ParameterValue": "master"
+  }
+]
