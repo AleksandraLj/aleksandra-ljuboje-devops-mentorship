@@ -18,7 +18,8 @@
 
   <a href="https://twitter.com/awsbosnia" target="_blank">
  <img src="https://skillicons.dev/icons?i=twitter" /> </a>
-  
- 
- 
+
 </p>
+
+>*Note*
+> Files with explanation are written in native languages spoken in Bosnia and Hercegovina. 
