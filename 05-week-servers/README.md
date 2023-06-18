@@ -1,4 +1,5 @@
 *week-5 notes about topic Serveri*
+# Serveri
 ## Šta je server i koja je razlika između hardveskog i softverskog servera
 *Server* može biti bilo koji program ili sistem na privatnom računaru koji pruža određene usluge drugim računarima unutar neke računarske mreže.
 
