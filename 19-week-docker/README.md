@@ -2,10 +2,15 @@
 - [x] Obavezno pogledati - [Free Docker Fundamentals - Cantrill](https://www.youtube.com/watch?v=gthvzSE4yIY&list=PLTk5ZYSbd9Mg51szw21_75Hs1xUpGObDm&ab_channel=LearnCantrill)
 # Sadrzaj
 [📖 1 Sta je docker?](#1-docker)
+
 [📖 2 Docker arhitektura i terminologija](#2-docker-terminologija)
+
 [📖 3 Instalacija na Windows WSL](#3-docker-instalacija)
+
 [📖 4 hello-world container](#4-docker-hello-world)
-[📖 Korisne komande](#5-docker-commands)
+
+[📖 Korisne komande](###5-docker-commands)
+
 
 # [![My Skills](https://skillicons.dev/icons?i=docker)](https://skillicons.dev)  Docker 
 
@@ -114,7 +119,7 @@ $ wsl.exe --set-version Ubuntu-22.04 2
 
 #### Postavljanje v2 za buduce instalacije
 - Komanda koja se koristi za postavljanje na v2 je:
-```json
+```bash
 $ wsl.exe --set-default-version 2
 ```
 - Upgrade je uspjesno zavrsen
@@ -161,7 +166,7 @@ $ docker run hello-world
 ![slika](files/docker-hw.png)
 - Kako prethodno nismo imali `hello-world` image na nasem lokalu, Docker je odradio `$ docker pull` komandu i preuzeo image `hello-world` i to `latest` kao zadnju dostupnu verziju ovog image-a.
 - Cijeli postupak objasnjen je u output-u komande koju smo pokrenuli. 
-```json
+```bash
 Da bi se generisala ova poruka. Docker je odradio sljedece korake:
 1. Docker Client kontaktirao je Docker Daemon
 2. Docker Daemon odradio je `pull` i iz Docker Hub preuzeo image naziva "hello-world"
@@ -186,3 +191,4 @@ $ docker ps -a # pregled svih procesa i zavrsenih
 $ docker run <image-name> # za pokretanje image-a
 
 $ docker images # prikaz svih image-a
+```
