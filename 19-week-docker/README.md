@@ -2,19 +2,15 @@
 - [x] Obavezno pogledati - [Free Docker Fundamentals - Cantrill](https://www.youtube.com/watch?v=gthvzSE4yIY&list=PLTk5ZYSbd9Mg51szw21_75Hs1xUpGObDm&ab_channel=LearnCantrill)
 # Sadrzaj
 [📖 1 Sta je docker?](#1-docker)
-
 [📖 2 Docker arhitektura i terminologija](#2-docker-terminologija)
-
 [📖 3 Instalacija na Windows WSL](#3-docker-instalacija)
-
 [📖 4 hello-world container](#4-docker-hello-world)
-
 [📖 Korisne komande](###5-docker-commands)
 
 
 # [![My Skills](https://skillicons.dev/icons?i=docker)](https://skillicons.dev)  Docker 
 
-<a name= "docker">
+
 ## Sta je Docker?
 - Docker je open-source softverska platforma koja omogucava da radimo build, testiramo i deplojamo aplikacije, radimo update i upravljamo kontejnerima.
 - Docker pakuje softver u standardizovane jedinice koje se nazivaju *kontejneri* a koji sadrze sve sto je potrebno da bi se aplikacija izvrsavala na OS ukljucujuci biblioteke, system tools, kod i runtime enviroment.
@@ -45,9 +41,9 @@
 
 ![slika](files/servers.ppm)
 
-<a name= "docker-terminologija">
+
 ## Docker arhitektura i terminologija
-![slika](files/docker.png)
+![slika](files/docker-architecture.png)
 - **Docker engine** je bazni engine instaliran na Docker host-u a koji radi build  i run kontejnera koristeci Docker komponente i servise 
 
 - **Docker Client** je nacin na koji smo u interakciji sa Docker-om (Docker Desktop, Command Line i sl.). Docker Client koristi Docker API da bi poslao komande ka Docker Daemon.
@@ -68,7 +64,7 @@
 
 ![slika](files/docker-image.png)
 
-<a name= "docker-instalacija">
+
 # Instalacija Docker na Windows WSL
 ### Pre-requirements
 - Instaliran WSL na Windows
@@ -145,7 +141,7 @@ $ docker
 ```
 ![slika](files/docker-succ.png)
 
-<a name= "docker-hello-world">
+
 ## hello-world container
 
 - Jedan odlican primjer interakcije izmedju Docker Client i Docker Daemon prikazan je u nastavku. 
@@ -165,7 +161,7 @@ $ docker run hello-world
 
 ![slika](files/docker-hw.png)
 - Kako prethodno nismo imali `hello-world` image na nasem lokalu, Docker je odradio `$ docker pull` komandu i preuzeo image `hello-world` i to `latest` kao zadnju dostupnu verziju ovog image-a.
-- Cijeli postupak objasnjen je u output-u komande koju smo pokrenuli. 
+- Cijeli postupak objasnjen je u output-u komande koju smo pokrenuli.
 ```bash
 Da bi se generisala ova poruka. Docker je odradio sljedece korake:
 1. Docker Client kontaktirao je Docker Daemon
@@ -182,7 +178,6 @@ $ docker images
 
 ![slika](files/docker-images.png)
 
-<a name= "docker-commands">
 ### Korisne Docker komande
 ```bash
 $ docker ps
