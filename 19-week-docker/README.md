@@ -2,10 +2,15 @@
 - [x] Obavezno pogledati - [Free Docker Fundamentals - Cantrill](https://www.youtube.com/watch?v=gthvzSE4yIY&list=PLTk5ZYSbd9Mg51szw21_75Hs1xUpGObDm&ab_channel=LearnCantrill)
 # Sadrzaj
 [📖 1 Sta je docker?](#1-docker)
+
 [📖 2 Docker arhitektura i terminologija](#2-docker-terminologija)
+
 [📖 3 Instalacija na Windows WSL](#3-docker-instalacija)
+
 [📖 4 hello-world container](#4-docker-hello-world)
+
 [📖 Korisne komande](#5-docker-commands)
+
 
 # [![My Skills](https://skillicons.dev/icons?i=docker)](https://skillicons.dev)  Docker 
 
@@ -186,3 +191,4 @@ $ docker ps -a # pregled svih procesa i zavrsenih
 $ docker run <image-name> # za pokretanje image-a
 
 $ docker images # prikaz svih image-a
+```
