@@ -40,10 +40,12 @@
 - Za razliku od VM, koje imaju jedan vid samostalnosti, kvalitet izvrsenja aplikacija u ovom slucaju ce da zavisi od rada ostalih aplikacija koje su na istom Docker host-u, jer se ipak koristi isti OS. 
 
 ![slika](files/bm-vm-cont.png)
+*Na slici su prikazane razlike izmedju fizickog servera, VM i container-a*
 
 
 ## Docker arhitektura i terminologija
 ![slika](files/docker-architecture.png)
+*Slikoviti prikaz kako docker funkcionise*
 - **Docker engine** je bazni engine instaliran na Docker host-u a koji radi build  i run kontejnera koristeci Docker komponente i servise 
 
 - **Docker Client** je nacin na koji smo u interakciji sa Docker-om (Docker Desktop, Command Line i sl.). Docker Client koristi Docker API da bi poslao komande ka Docker Daemon.
@@ -62,7 +64,8 @@
 
 - **Docker container** je **runnable** instanca Image-a. To je standalone, executable softverski paket koji ukljucuje aplikaciju i njene dependencies. Koristeci Docker API ili CLI, mozemo startovati, stopirati ili obrisati kontejner. 
 
-![slika](files/docker-image.png)
+![slika](files/docker-image-alj.png)
+*Od Dockerfile do Docker Container*
 
 
 # Instalacija Docker na Windows WSL
@@ -180,10 +183,49 @@ $ docker images
 
 ### Korisne Docker komande
 ```bash
+# pregled aktivnih i zavrsenih procesa
 $ docker ps
 $ docker ps -a # pregled svih procesa i zavrsenih
 
 $ docker run <image-name> # za pokretanje image-a
 
 $ docker images # prikaz svih image-a
+
+$ docker pull <ime-image-a> # da preuzmemo image sa Docker Hub
+
+$ docker inspect <imageID> # da uradimo review metadata image-a
+
+# port i detach from terminal
+$ docker run -p x:y <image-name or image-id> # -p mapira port x koji je Docker Hub port u port y koji container koristi za pristup aplikaciji 
+$ docker run -p x:y -d <image-name or image-id> # -d  detach from terminal
+
+$ docker port <container-id> # prikazuje mapiranje portova npr. 80/tcp -> 0.0.0.0:8081
+
+# izvrsavanje u exec mode
+$ docker exec -it <CONTAINERID> ps -aux # izvrsavanje komandi unutar container-a
+$ docker exec -it <CONTANERID> sh # izvrsavanje shell komandi
+$ docker exec -it <CONTANERID> sh
+sh-4.4# df -k # prikaz file system unutar docker container-a
+
+
+# start, stop, restart 
+$ docker restart <CONTAINDERID> # restart container-a
+$ docker stop <CONTAINERID> # stopiranje container-a
+$ docker start <CONTAINERID> # start container-a
+
+# docker logs
+$ docker logs <CONTAINERID> # prikaz logova
+$ docker logs <CONTAINERID> -t # prikaz logova i -t za timestamp
+
+# brisanje container-a
+$ docker stop <CONTAINERID> # stopiramo container
+$ docker rm <CONTAINERID> # obrisemo container
+
+# brisanje image-a
+$ docker images 
+$ docker rmi <IMAGEID>
+
+
+# tag image
+$ docker build -t <naziv-taga> . # tagovanje image-a pri build-u
 ```
