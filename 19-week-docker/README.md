@@ -404,3 +404,10 @@ docker run \
 
  >**Note**
  > Ako navedemo ime volume-a koji ne postoji, kerirace se za nas isti pod tim nazivom.
+
+  ## Docker Compose 
+
+- koristi se za kreiranje, upravljanje i brisanje aplikacija sa vise kontejnera /*multi-container apps*
+- Docker Compose radi na nacin da procita `Docker Compose file`, obicno se ovaj file zove `compose.yaml` , a zatim Docker kreira, upravlja i brise resurse zavisno od toga sta je navedeno u `compose.yaml`
+- Komanda koja se koristi je `$ docker compose up`
+![docker-compose](files/docker-compose.png)
