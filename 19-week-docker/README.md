@@ -253,6 +253,10 @@ $ docker volume inspect <VolumeName>
 
 # brisanje volume
 $ docker volume  <VolumeName>
+
+# docker compose
+$ docker compose up -d 
+$ docker compose down
 ```
 
 
