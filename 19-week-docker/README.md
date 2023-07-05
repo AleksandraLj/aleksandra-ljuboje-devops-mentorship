@@ -6,6 +6,10 @@
 [📖 3 Instalacija na Windows WSL](#3-docker-instalacija)
 [📖 4 hello-world container](#4-docker-hello-world)
 [📖 Korisne komande](###5-docker-commands)
+[📖 Docker Container Networking](###5-docker-commands)
+[📖 Enviroment variables](###5-docker-commands)
+[📖 Docker Container Storage](###5-docker-commands)
+
 
 
 # [![My Skills](https://skillicons.dev/icons?i=docker)](https://skillicons.dev)  Docker 
@@ -228,4 +232,175 @@ $ docker rmi <IMAGEID>
 
 # tag image
 $ docker build -t <naziv-taga> . # tagovanje image-a pri build-u
+
+# name container, postavljanje env varijabli -e PMA_ARBITRARY=1
+$ docker run --name <ime-kontejnera> -d -p x:y -e PMA_ARBITRARY=1 phpmyadmin/phpmyadmin
+
+# bind mount -v option
+$ docker run -v "$(pwd)"/mariadb_data:/var/lib/mysql # pwd - current working dir / docker host file/dir name : container path to file/dir
+
+# bind mount --mount option 
+--mount type=bind,source="$(pwd)"/mariadb_data,target=/var/lib/mysql # source - docker host, target - container file/dir
+
+# kreiranje volume
+$ docker volume create <VolumeName>
+
+# lista dostupnih volume
+$ docker volume ls
+
+# pregled metadata
+$ docker volume inspect <VolumeName>
+
+# brisanje volume
+$ docker volume  <VolumeName>
 ```
+
+
+
+## Docker Container Networking
+- Aplikacija se izvrsava na portu `tcp/1337`
+### Host Networking
+- Kod Host Networking modula, host koristi isti port kao i aplikacija, `tcp/1337`
+- Ako korisnik zeli pristupiti, potrebno je da pristupi po portu 1337.
+- Nema mapiranja portova
+- Mana je sto, ako imamo jos jedan kontejner cija aplikacija koristi isti port 1337, on ce pasti jer se port vec koristi.
+- Pozeljno je za koristenje u slucaju kada imamo vise kontejnera sa aplikacijama, gdje svaka aplikacija koristi razlicite portove
+- ovaj nacin je dosta jednostavniji 
+
+### Bridge Networking
+
+- rjesava problem pristupa portu 1337 
+- Bridge Network je kreiran odvojeno, svakom kontejneru je dodijeljena IP adresa te mogu da se identifikuju i koriste port 1337 jer imaju jedinstvene IP adrese unutar mreze
+- oba kontejnera mogu medjusobno komunicirati jer su unutar istog bridge-a
+- ne moze im se pristupiti van Docker Host-a
+- kako bi im se pristupilo van Docker Host-a potrebno je mapiranje portova
+
+### Mapiranje portova
+``` HostPort:ContainerPort ```
+- Neka Container App koristi port 1337
+- Neka Docker Host koristi port 80 za pristup "sa vana"
+- za mapiranje koristimo parametar `-p` i komanda izgleda ovako:
+``` docker run -p 80:1337 -d <image-name or image-id>```
+- dakle sa mapiranjem cinimo Container port javno dostupnim za pristup preko Docker Host port-a
+
+
+## Enviroment Variables
+- Objasnjenje komande 
+
+``` docker run --name phpmyadmin -d -p 8081:80 -e PMA_ARBITRARY=1 phpmyadmin/phpmyadmin ```
+
+- `--name` - ime container-a
+- `-e` da specificiramo enviroment variable
+
+## Docker Container  Storage
+### Writtable layer
+- koristi *Union File System* koji omogucava fajlovima iz odvojenih file sistema da formiraju jedan file sistem.
+- prostije receno u ovom layeru, svi fajlovi iz svih Image layera bice dostupni na jednom mjestu.
+- U ovom layeru dostupni su i podaci koji se dodaju naknadno, a koji ce da *override*-uju defaultne vrijednosti.
+- Image data (podaci iz Image layera) dostupni su samo za citanje, dok svi podaci koji su **writes** idu u ovaj Writtable layer.
+- cini container jedinstvenim/*unique*
+- Zakacen je za lifecycle container-a i ne moze se lako migrirati
+
+### tmpfs
+- file sistem koji se koristi kao privremeny/*temporary* storage
+- fast in-memory storage
+- not persistent
+- ne moze biti dijeljena izmedju container-a
+
+### bind-mount
+- mapiranje file/directory sa Docker Host na Container 
+- sa ovom opcijom vise container-a moze pristupati istom host folderu 
+- koristi se za *share access to data*
+- nije managed od strane Dockera
+- parametri za mapiranje su `-v` ili `--mount`
+#### Primjer koda sa `--mount`
+```bash
+docker run \
+ --name db \
+ -e MYSQL_ROOT_PASSWORD=somewordpress \
+ -e MYSQL_PASSWORD=wordpress \
+ -e MYSQL_DATABASE=wordpress \
+ -e MYSQL_USER=wordpress \
+ --mount type=bind,source="$(pwd)"/mariadb_data,target=/var/lib/mysql \
+ -d \
+ mariadb:10.6.4-focal \
+ --default-authentication-plugin=mysql_native_password
+ ```
+ - u `source` se nalazi folder na Docker Host-u tj. putanja ka folderu
+ - u `target` se nalazi putanja do foldera na Container-u koji zelimo mapirati
+ - Ovom komandom cemo u `mariadb_data` folder na Docker Host-u kopirati sve fajlove sa putanje navedene u target
+ - svaka promjena u folderu `mysql` u Container-u, bice odmah vidljiva u folderu `mariadb_data` na Docker Hostu
+ - **vrijedi i obrnuto**
+ #### Primjer koda sa `-v`
+ ```bash
+ docker run \
+ --name db \
+ -e MYSQL_ROOT_PASSWORD=somewordpress \
+ -e MYSQL_PASSWORD=wordpress \
+ -e MYSQL_DATABASE=wordpress \
+ -e MYSQL_USER=wordpress \
+ -v "$(pwd)"/mariadb_data:/var/lib/mysql \
+ -d \
+ mariadb:10.6.4-focal \
+ --default-authentication-plugin=mysql_native_password
+ ```
+ - `$ pwd` je current working directory path 
+ >**Note**
+ > \ back-slash se koristi za izvrsenje u novom redu
+
+-  za brisanje foldera na Docker Host koristimo
+ ```bash
+  rm -rf <ime-foldera>
+  ```
+### volumes
+- dodavanje storage-a van lifecycle container-a
+- kao i bind mounts samo je managed od strane Docker-a
+- postoji van container lifecycle te ce postojati i kada ce container za koji je vezan ukloni 
+- mogu se premjestati i povezivati sa drugim kontejnerima
+- mogu biti koristene od strane vise kontejnera
+- nema *file-locking* opcije
+
+#### Komande za volumes
+```bash
+# kreiranje volume
+$ docker volume create <VolumeName>
+
+# lista dostupnih volume
+$ docker volume ls
+
+# pregled metadata
+$ docker volume inspect <VolumeName>
+
+# brisanje volume
+$ docker volume  <VolumeName>
+
+```
+ #### Primjer koda sa `--mount`
+```bash
+docker run \
+ --name db \
+ -e MYSQL_ROOT_PASSWORD=somewordpress \
+ -e MYSQL_PASSWORD=wordpress \
+ -e MYSQL_DATABASE=wordpress \
+ -e MYSQL_USER=wordpress \
+ --mount source=mariadb_data,target=/var/lib/mysql \
+ -d \
+ mariadb:10.6.4-focal \
+ --default-authentication-plugin=mysql_native_password
+ ```
+ #### Primjer koda sa `-v`
+ ```bash
+ docker run \
+ --name db \
+ -e MYSQL_ROOT_PASSWORD=somewordpress \
+ -e MYSQL_PASSWORD=wordpress \
+ -e MYSQL_DATABASE=wordpress \
+ -e MYSQL_USER=wordpress \
+ -v mariadb_data:/var/lib/mysql \
+ -d \
+ mariadb:10.6.4-focal \
+ --default-authentication-plugin=mysql_native_password
+ ```
+
+ >**Note**
+ > Ako navedemo ime volume-a koji ne postoji, kerirace se za nas isti pod tim nazivom.
