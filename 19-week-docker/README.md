@@ -413,5 +413,6 @@ docker run \
 
 - koristi se za kreiranje, upravljanje i brisanje aplikacija sa vise kontejnera /*multi-container apps*
 - Docker Compose radi na nacin da procita `Docker Compose file`, obicno se ovaj file zove `compose.yaml` , a zatim Docker kreira, upravlja i brise resurse zavisno od toga sta je navedeno u `compose.yaml`
-- Komanda koja se koristi je `$ docker compose up`
+- Komanda koja se koristi je `$ docker compose up` i `$ docker compose down`
 ![docker-compose](files/docker-compose.png)
+
