@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: AWS Step Functions sample project for scheduling a task
+
+Resources:
+  StatesExecutionRole: # naziv IAM role koja se kreira
+    Type: 'AWS::IAM::Role' # tipa je IAM ROLE
+    Properties:
+      AssumeRolePolicyDocument: # definisemo policy koji kaze ko ili sta moze da koristi rolu - ovdje je to states.amazonaws.com
+        Version: '2012-10-17' # verzija jezika koji se koristi
+        Statement: # definisemo permisije 
+          - Effect: 'Allow'  # da li su permisije dozvoljene ili nisu
+            Principal: # definisemo entitet kojem je zabranjen ili dozvoljen pristup
+              Service: states.amazonaws.com # AWS Step Functions service.
+            Action: 'sts:AssumeRole' # role permisions
+      Path: '/'
+
+  TimerStateMachine:
+    Type: 'AWS::StepFunctions::StateMachine'
+    Properties:
+      DefinitionString: |-
+        {
+          "Comment": "An example of the Amazon States Language for scheduling a task.", 
+          "StartAt": "Wait for Timer", 
+          "States": {
+            "Wait for Timer": {
+              "Type": "Wait",
+              "SecondsPath": "$.timer_seconds",
+              "Next": "Success"
+            },
+            "Success": {
+              "Type": "Succeed"
+            }
+          }
+        }
+      RoleArn: !GetAtt [StatesExecutionRole, Arn] # retrieve the value of an attribute from a resource.
+# "Comment" - OPCIONO - dodamo komentar na ASL
+# "StartAt" - pocetno stanje, mora odgovarati imenu prvog state
+# "States" - navodimo ime stanja i definisemo sta radi
+# "Type" - jedno od 8 stanja 
+# "SecondsPath" - kupi koliko sekundi cekamo prije nego se izvrsi skripta
+# "Next" - koji je sljedeci state
+# definisemo dalje 
+
+Outputs:
+  StateMachineArn:
+    Value:
+      Ref: TimerStateMachine
+  ExecutionInput:
+    Description: Sample input to StartExecution.
+    Value: '{ "timer_seconds": 10 }'
